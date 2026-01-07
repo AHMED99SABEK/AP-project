@@ -41,4 +41,17 @@ public abstract class Person {
     public void setPersonID(int id){
         this.personID = id;
     }
+    public boolean verifyLogin(String email, String password) {
+        if (this.email.equals(email) && this.password.equals(password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public void displayProfile() {
+        System.out.println("Person ID: " + personID);
+        System.out.println("Name: " + name.getFullName());
+        System.out.println("Phone Number: " + phoneNo);
+        System.out.println("Email: " + email);
+    }
 }
