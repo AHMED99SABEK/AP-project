@@ -1,5 +1,4 @@
 
-import java.util.Vector;
 
 
 public class GymClass {
@@ -12,8 +11,6 @@ public class GymClass {
     private int enrolledCount;
     private double classFee;
 
-
-    // get and set
     public int getEnrolledCount() {
         return enrolledCount;
     }

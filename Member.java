@@ -5,8 +5,10 @@ public class Member extends Person{
     private String membershipTier;
     private Date joinDate;
     private Date expiryDate;
+    private MembershipPlan membershipPlan;
     private ArrayList<GymClass> enrolledClasses;
     private ArrayList<Attendance> attendanceHistory;
+    private ArrayList<Feedback> feedbackHistory;
     public Member(int id, Name name, String phone, String email, String password, int memberID, String membershipTier, Date joinDate, Date expiryDate){
         super(id, name, phone, email, password);
         this.memberID = memberID;
@@ -49,17 +51,38 @@ public class Member extends Person{
         this.attendanceHistory = attendanceHistory;
     }
     public void registerMembership(MembershipPlan membershipPlan){
-        this.membershipTier = membershipPlan.getMembershipTier();
+        this.membershipTier = membershipPlan.getTier();
         this.joinDate = new Date();
-        this.expiryDate = new Date(joinDate.getTime() + membershipPlan.getDuration() * 30 * 24 * 60 * 60 * 1000);
+        int durationMonths = 0;
+        try {
+            durationMonths = Integer.parseInt(membershipPlan.getDuration());
+        } catch (NumberFormatException e) {
+            durationMonths = 1;
+        }
+        this.expiryDate = new Date(joinDate.getTime() + (long)durationMonths * 30L * 24 * 60 * 60 * 1000);
     }
     public void enrollClass(GymClass gymClass){
+        if (this.enrolledClasses == null) {
+            this.enrolledClasses = new ArrayList<>();
+        }
         this.enrolledClasses.add(gymClass);
     }
+
     public void submitFeedback(GymClass gymClass, int rating, String comment){
-        Feedback feedback = new Feedback(this, gymClass, rating, comment);
-        gymClass.addFeedback(feedback);
+        String memberIDStr = String.valueOf(this.memberID);
+        String classIDStr = gymClass.getClassID();
+        String dateStr = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+        float ratingFloat = (float) rating;
+        String commentStr = comment;
+        String memberNameStr = this.getName() != null ? this.getName().getFullName() : "Unknown";
+
+        Feedback feedback = new Feedback(memberIDStr, classIDStr, dateStr, ratingFloat, commentStr, memberNameStr);
+        if (this.feedbackHistory == null) {
+            this.feedbackHistory = new ArrayList<>();
+        }
+        this.feedbackHistory.add(feedback);
     }
+
     public void viewSchedule(){
         System.out.println("Member ID: " + memberID);
         System.out.println("Membership Tier: " + membershipTier);
@@ -73,7 +96,10 @@ public class Member extends Person{
         System.out.println("Enrolled Classes: " + enrolledClasses);
     }
     public void viewFeedback(){
-        System.out.println("Feedback: " + feedback);
+        System.out.println("Feedback: " + feedbackHistory);
+        for (Feedback feedback : feedbackHistory) {
+            feedback.viewFeedbackInfo();
+        }
     }
     public void viewPersonalInfo(){
         System.out.println("Personal Information: " + this.getName().getFullName());
