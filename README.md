@@ -1,24 +1,18 @@
 GYM MEMBERSHIP MANAGEMENT SYSTEM
 Project Proposal
 SECJ2154 OBJECT ORIENTED PROGRAMMING
-Session: [Your Session/Year]
-Section: [Your Section]
+Session: [1/2526]
 
 Team Members Information
-Name
-Matric Number
-Role
-[Team Member 1]
-[Matric No.]
-Team Leader
-[Team Member 2]
-[Matric No.]
-Member
-[Team Member 3]
-[Matric No.]
-Member
+AHMED SAID ABDELRAHMAN
+A24MJ3026
+ALRASHADI, MOHAMMED HUSSEIN HASAN ABDULRAB
+A24MJ4015
+HOUDA MAHAM
+A24MJ4018
 
-Lecturer: [Lecturer Name]
+
+Lecturer: Dr. rozana
 
 1.0 Introduction
 1.1 Background
